@@ -1,20 +1,28 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">当前账号：{{ name }}</div>
+    <div class="dashboard-chart">
+      <LineBar title="登录情况总览" :option="currentOption" />
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
+import LineBar from "../../components/LineBar";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
+  components: { LineBar },
+  data() {
+    return {
+      currentOption: {},
+    };
+  },
   computed: {
-    ...mapGetters([
-      'name'
-    ])
-  }
-}
+    ...mapGetters(["name"]),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -25,6 +33,10 @@ export default {
   &-text {
     font-size: 30px;
     line-height: 46px;
+  }
+  &-chart {
+    height: 400px;
+    background-color: #fff;
   }
 }
 </style>
