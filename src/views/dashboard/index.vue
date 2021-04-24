@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">当前账号：{{ name }}</div>
-    <div class="dashboard-chart">
-      <LineBar title="登录情况总览" :option="currentOption" />
+    <div class="chart-container">
+      <line-bar height="100%" width="100%" />
     </div>
   </div>
 </template>
@@ -16,12 +16,12 @@ export default {
   components: { LineBar },
   data() {
     return {
-      currentOption: {},
+      currentOption: {}
     };
   },
   computed: {
-    ...mapGetters(["name"]),
-  },
+    ...mapGetters(["name"])
+  }
 };
 </script>
 
@@ -38,5 +38,11 @@ export default {
     height: 400px;
     background-color: #fff;
   }
+}
+
+.chart-container {
+  margin-top: 32px;
+  width: 100%;
+  height: 500px;
 }
 </style>
