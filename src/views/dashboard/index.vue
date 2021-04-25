@@ -2,13 +2,14 @@
   <div class="dashboard-container">
     <div class="dashboard-text">当前账号：{{ name }}</div>
     <div class="chart-container">
-      <line-bar height="100%" width="100%" />
+      <line-bar height="100%" width="100%" :option="currentOption" />
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { getChartData } from "@/api/chart";
 import LineBar from "../../components/LineBar";
 
 export default {
@@ -21,6 +22,21 @@ export default {
   },
   computed: {
     ...mapGetters(["name"])
+  },
+  methods: {
+    getData() {
+      getChartData().then(res => {
+        let list = res.data;
+        this.currentOption = {
+          series: {
+            data: list
+          }
+        };
+      });
+    }
+  },
+  mounted() {
+    this.getData();
   }
 };
 </script>

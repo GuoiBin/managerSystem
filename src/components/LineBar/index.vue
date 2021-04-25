@@ -24,6 +24,10 @@ export default {
     height: {
       type: String,
       default: "200px"
+    },
+    option: {
+      type: Object,
+      default: null
     }
   },
   data() {
@@ -41,15 +45,28 @@ export default {
     this.chart.dispose();
     this.chart = null;
   },
+  computed: {
+    currentOption() {
+      return this.option;
+    }
+  },
+  watch: {
+    currentOption: {
+      handler(val) {
+        console.log("option:", val);
+        this.chart.setOption(val);
+      },
+      deep: true
+    }
+  },
   methods: {
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id));
-
-      this.chart.setOption({
+      var initOption = {
         backgroundColor: "#394056",
         title: {
           top: 20,
-          text: "登录数据总览",
+          text: "发帖数据总览",
           textStyle: {
             fontWeight: "normal",
             fontSize: 16,
@@ -69,9 +86,9 @@ export default {
           top: 20,
           icon: "rect",
           itemWidth: 14,
-          itemHeight: 5,
+          itemHeight: 10,
           itemGap: 13,
-          data: ["CMCC", "CTCC", "CUCC"],
+          data: ["发帖数量"],
           right: "4%",
           textStyle: {
             fontSize: 12,
@@ -93,27 +110,13 @@ export default {
               lineStyle: {
                 color: "#57617B"
               }
-            },
-            data: [
-              "13:00",
-              "13:05",
-              "13:10",
-              "13:15",
-              "13:20",
-              "13:25",
-              "13:30",
-              "13:35",
-              "13:40",
-              "13:45",
-              "13:50",
-              "13:55"
-            ]
+            }
           }
         ],
         yAxis: [
           {
             type: "value",
-            name: "(%)",
+            name: "(篇)",
             axisTick: {
               show: false
             },
@@ -135,141 +138,51 @@ export default {
             }
           }
         ],
-        series: [
-          {
-            name: "CMCC",
-            type: "line",
-            smooth: true,
-            symbol: "circle",
-            symbolSize: 5,
-            showSymbol: false,
-            lineStyle: {
-              normal: {
-                width: 1
-              }
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "rgba(137, 189, 27, 0.3)"
-                    },
-                    {
-                      offset: 0.8,
-                      color: "rgba(137, 189, 27, 0)"
-                    }
-                  ],
-                  false
-                ),
-                shadowColor: "rgba(0, 0, 0, 0.1)",
-                shadowBlur: 10
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "rgb(137,189,27)",
-                borderColor: "rgba(137,189,2,0.27)",
-                borderWidth: 12
-              }
-            },
-            data: [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
+        series: {
+          name: "发帖数量",
+          type: "line",
+          smooth: true,
+          symbol: "circle",
+          symbolSize: 5,
+          showSymbol: false,
+          lineStyle: {
+            normal: {
+              width: 1
+            }
           },
-          {
-            name: "CTCC",
-            type: "line",
-            smooth: true,
-            symbol: "circle",
-            symbolSize: 5,
-            showSymbol: false,
-            lineStyle: {
-              normal: {
-                width: 1
-              }
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "rgba(0, 136, 212, 0.3)"
-                    },
-                    {
-                      offset: 0.8,
-                      color: "rgba(0, 136, 212, 0)"
-                    }
-                  ],
-                  false
-                ),
-                shadowColor: "rgba(0, 0, 0, 0.1)",
-                shadowBlur: 10
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "rgb(0,136,212)",
-                borderColor: "rgba(0,136,212,0.2)",
-                borderWidth: 12
-              }
-            },
-            data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(
+                0,
+                0,
+                0,
+                1,
+                [
+                  {
+                    offset: 0,
+                    color: "rgba(137, 189, 27, 0.3)"
+                  },
+                  {
+                    offset: 0.8,
+                    color: "rgba(137, 189, 27, 0)"
+                  }
+                ],
+                false
+              ),
+              shadowColor: "rgba(0, 0, 0, 0.1)",
+              shadowBlur: 10
+            }
           },
-          {
-            name: "CUCC",
-            type: "line",
-            smooth: true,
-            symbol: "circle",
-            symbolSize: 5,
-            showSymbol: false,
-            lineStyle: {
-              normal: {
-                width: 1
-              }
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "rgba(219, 50, 51, 0.3)"
-                    },
-                    {
-                      offset: 0.8,
-                      color: "rgba(219, 50, 51, 0)"
-                    }
-                  ],
-                  false
-                ),
-                shadowColor: "rgba(0, 0, 0, 0.1)",
-                shadowBlur: 10
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "rgb(219,50,51)",
-                borderColor: "rgba(219,50,51,0.2)",
-                borderWidth: 12
-              }
-            },
-            data: [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122]
+          itemStyle: {
+            normal: {
+              color: "rgb(137,189,27)",
+              borderColor: "rgba(137,189,2,0.27)",
+              borderWidth: 12
+            }
           }
-        ]
-      });
+        }
+      };
+      this.chart.setOption(initOption);
     }
   }
 };
